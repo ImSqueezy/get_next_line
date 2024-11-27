@@ -26,10 +26,24 @@ char	*init(int fd, char *tmp, char *s)
 	
 	store = NULL;
 	i = 1;
-	while (i = read(fd, tmp, BUFFER_SIZE))
+	while ((i = read(fd, tmp, BUFFER_SIZE)))
 	{
-		// 
+		if (i < 0) // free allocated memory if read fails to read
+		{
+			perror("read:");
+			tmp = NULL;
+			return (free(tmp), NULL);
+		}
+		else if (i == 0)
+			break ;
+		// printf("tmp %s\n", tmp);
+		// printf("store %s\n", store);
+		s = tmp;
+		printf("%s\n", s);
+		store = ft_strjoin(store, s);
+		// store = NULL
 	}
+	// printf("store %s", store);
 	return (store);
 }
 
@@ -52,6 +66,9 @@ int main()
 	if (fd < 0)
 		perror("open:");
 	char *p = gnl(fd);
+	// printf("%s", p);
 	return (0);
 }
 
+// return null on read's failure
+// return the line read if success (\n included at the end unless no \n found at the end of the file)

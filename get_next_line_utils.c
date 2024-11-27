@@ -68,8 +68,14 @@ char    *ft_strdup(char *str)
 
 // int main()
 // {
-// 	char p[10] = "hell";
-// 	char *p2 = ft_strjoin(NULL, "world");
-// 	printf("%s", p2);
+// 	char *store;
+// 	int i = 0;
+// 	while (i < 2)
+// 	{
+// 		store = "1234";
+// 		store = ft_strjoin(store, "5678");
+// 		i++;
+// 	}
+// 	printf("%s\n", store);
 // 	return (0);
 // }
