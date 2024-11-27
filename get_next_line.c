@@ -1,78 +1,57 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aouaalla <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/11/27 10:38:32 by aouaalla          #+#    #+#             */
+/*   Updated: 2024/11/27 10:38:39 by aouaalla         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <fcntl.h>
 #include <stdlib.h>
 #include "get_next_line.h"
 
-static char	*init(char *s, char *b, int i)
+
+	// if read returned -1 (error occured)
+	// if read returned 0 (nothing to read)
+	// esle the number of bytes read is returned	
+
+char	*init(int fd, char *tmp, char *s)
 {
-	char	*tmp;
-	ssize_t	rv;
-
-	rv = 1;
-	while (rv)
+	ssize_t	i;
+	char	*store;
+	
+	store = NULL;
+	i = 1;
+	while (i = read(fd, tmp, BUFFER_SIZE))
 	{
-		rv = read(fd, b, BUFFER_SIZE);
-		if (rv == -1)
-		{
-			free(s);
-			s = NULL;
-			return (NULL);
-		}
-		else if (rv == 0)
-			s = ft_strdup("");
-		tmp = s;
-
+		// 
 	}
+	return (store);
 }
 
-
-char *get_next_line(int fd)
+char	*gnl(int fd)
 {
-	static char *st;
-	char		*p;
-	char		*line_read;
+    static char *st;
+    char *p;
+	char *line;
 
-	free(st);
-	p = (char *)malloc(BUFFER_SIZE + 1);
-	if (fd < 0 || BUFFER_SIZE < 0) // if buffer size = 0 it's going to be handled inside the loop in init
-	{
-		free(p);
-		p = NULL;
-		return (NULL);
-	}
-	if (!p)
-		return (NULL);
-	line_read = init(s, p, fd);
-	return (p);
+    p = (char *)malloc(BUFFER_SIZE + 1 * sizeof(char));
+    if (!p)
+        return (0);
+	line = init(fd, p, st);
+	return (line);
 }
 
 int main()
 {
-	int fd;
-	fd = open("txt.txt", O_RDWR	| O_CREAT, 00644);
+	int fd = open("test.txt", O_RDONLY); // the file containes two lines
 	if (fd < 0)
-	{
 		perror("open:");
-		return (0);
-	}
-	int i;
-	i = write(fd, "hello world", 11);
-	if (i < 0)
-	{
-		perror("write:");
-		return (0);
-	}
-	char *p = get_next_line(fd);
-	printf("%s", p);
+	char *p = gnl(fd);
 	return (0);
 }
 
-// int main()
-// {
-// 	char *p;
-// 	int fd = open("test.txt", O_RDONLY | O_CREAT, 00700 | 00040 | 00004);
-
-// 	int i =  read(fd, p, 5);
-// 	p = get_next_line(fd);
-// 	printf("%d\n%s", i, p);
-// 	return (0);
-// }

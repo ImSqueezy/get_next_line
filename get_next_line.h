@@ -9,5 +9,7 @@
 
 char	*get_next_line(int fd);
 char    *ft_strdup(char *str);
+char	*ft_strjoin(char *s1, char const *s2);
+size_t	ft_strlen(const char *str);
 
 #endif
