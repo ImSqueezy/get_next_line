@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aouaalla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/27 10:37:36 by aouaalla          #+#    #+#             */
-/*   Updated: 2024/11/27 10:37:58 by aouaalla         ###   ########.fr       */
+/*   Created: 2024/11/28 14:05:07 by aouaalla          #+#    #+#             */
+/*   Updated: 2024/11/28 14:05:09 by aouaalla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ char	*ft_strjoin(char *s1, char const *s2)
 	size_t	j;
 
 	if (!s1)
-		return ((char *)s2);
+		return (ft_strdup((char *)s2));
 	else if (!s2)
-		return (s1);
+		return (ft_strdup(s1));
 	total_len = ft_strlen(s1) + ft_strlen(s2);
 	p = (char *)malloc((total_len + 1) * sizeof(char));
 	if (!p)
@@ -54,26 +54,25 @@ char	*ft_strchr(const char *str, int c)
 	return (0);
 }
 
-
-size_t  ft_strlen(const char *str)
+size_t	ft_strlen(const char *str)
 {
-    size_t  i;
+	size_t	i;
 
-    i = 0;
-    while (*str++)
-        i++;
-    return (i);
+	i = 0;
+	while (*str++)
+		i++;
+	return (i);
 }
 
-char    *ft_strdup(char *str)
+char	*ft_strdup(char *str)
 {
 	char	*p;
-    size_t   i;
+	size_t	i;
 
 	p = malloc((ft_strlen(str) + 1) * sizeof(char));
 	if (!p)
 		return (0);
-    i = 0;
+	i = 0;
 	while (*str)
 		p[i++] = *str++;
 	p[i] = '\0';
