@@ -10,9 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
-#include <stdlib.h>
 #include "get_next_line.h"
+#include <stdio.h>
 
 char	*init(int fd, char *s, char *buffer)
 {
@@ -23,9 +22,9 @@ char	*init(int fd, char *s, char *buffer)
 	{
 		if (i < 0)
 		{
-			perror("read:");
+			free(buffer);
 			buffer = NULL;
-			return (free(buffer), buffer);
+			return (buffer);
 		}
 		buffer[i] = '\0';
 		tmp = s;
@@ -33,45 +32,31 @@ char	*init(int fd, char *s, char *buffer)
 		if (ft_strchr(buffer, '\n'))
 			break ;
 	}
-	tmp = NULL;
 	return (s);
 }
 
-char	*get_after_line(char *str)
+void	clear(char *p)
 {
-	char	*p;
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	if (!str)
-		return (NULL);
-	while (str[i] && str[i] != '\n')
-		i++;
-	i += 1;
-	p = (char *)malloc(i * sizeof(char));
-	j = 0;
-	while (j < i)
-	{
-		p[j] = str[j];
-		j++;
-	}
-	return (p);
+	free(p);
+	p = NULL;
 }
 
-char	*gnl(int fd)
+char	*get_next_line(int fd)
 {
 	static char	*st;
 	char		*p;
 	char		*line;
 
+	p = NULL;
+	if (fd < 0 || BUFFER_SIZE < 0)
+		return (clear(st), st);
 	p = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!p)
 		return (0);
 	line = init(fd, st, p);
-	p = NULL;
-	free(p);
-	st = get_after_line(line);
-	line = NULL;
-	return (st);
+	clear(p);
+	return (line);
 }
+
+// code substr
+// think about a way to copy whats after the \n and merge it with the new line (process)
