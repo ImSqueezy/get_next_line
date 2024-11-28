@@ -41,6 +41,20 @@ char	*ft_strjoin(char *s1, char const *s2)
 	return (p);
 }
 
+char	*ft_strchr(const char *str, int c)
+{
+	while (*str)
+	{
+		if (*str == (char)c)
+			return ((char *)str);
+		str++;
+	}
+	if (*str == c)
+		return ((char *)str);
+	return (0);
+}
+
+
 size_t  ft_strlen(const char *str)
 {
     size_t  i;
@@ -65,17 +79,3 @@ char    *ft_strdup(char *str)
 	p[i] = '\0';
 	return (p);
 }
-
-// int main()
-// {
-// 	char *store;
-// 	int i = 0;
-// 	while (i < 2)
-// 	{
-// 		store = "1234";
-// 		store = ft_strjoin(store, "5678");
-// 		i++;
-// 	}
-// 	printf("%s\n", store);
-// 	return (0);
-// }
