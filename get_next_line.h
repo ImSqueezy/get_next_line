@@ -12,10 +12,15 @@
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-# define BUFFER_SIZE 8
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 8
+# endif
+
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdlib.h>
+# include <limits.h>
 
 char	*get_next_line(int fd);
 char	*ft_strdup(char *str);
