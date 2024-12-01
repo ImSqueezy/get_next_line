@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdio.h>
 
 static void	clear(char *p)
 {
@@ -44,51 +45,25 @@ static char	*init(int fd, char *s, char *buffer)
 
 static char	*before_nline(char *str)
 {
-	char	*p;
 	size_t	len;
-	size_t	i;
 
 	len = 0;
 	while (str[len] && str[len] != 10)
 		len++;
-	p = (char *)malloc((len + 1) * sizeof(char));
-	if (!p)
-		return (p);
-	i = 0;
-	while (i < len)
-	{
-		p[i] = str[i];
-		i++;
-	}
-	p[i] = 0;
-	return (p);
+	return (ft_substr(str, 0, len));
 }
 
 static char	*after_nline(char *str)
 {
-	char	*p;
-	size_t	len;
-	size_t	i;
+	char	*tmp;
 
-	while (*str != 10 && *str)
-		str++;
-	str++;
-	len = 0;
-	while (str[len])
-		len++;
-	if (!len)
-		return (ft_strdup(""));
-	p = (char *)malloc((len + 1) * sizeof(char));
-	if (!p)
-		return (p);
-	i = 0;
-	while (i < len)
-	{
-		p[i] = str[i];
-		i++;
-	}
-	p[i] = 0;
-	return (p);
+	tmp = ft_strchr(str, '\n');
+	if (!tmp)
+		return (tmp);
+	tmp++;
+	if (*tmp == '\0')
+		return (ft_strdup(tmp));
+	return (ft_strdup(tmp));
 }
 
 char	*get_next_line(int fd)
@@ -99,9 +74,9 @@ char	*get_next_line(int fd)
 	char		*line;
 
 	p = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE >= INT_MAX)
+	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE > INT_MAX)
 		return (clear(st), st);
-	p = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+	p = (char *)malloc(((size_t)(BUFFER_SIZE + 1)) * sizeof(char));
 	if (!p)
 		return (0);
 	container = init(fd, st, p);
