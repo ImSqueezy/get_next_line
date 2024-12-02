@@ -71,7 +71,7 @@ char	*ft_strdup(char *str)
 
 	p = malloc((ft_strlen(str) + 1) * sizeof(char));
 	if (!p)
-		return (0);
+		return (p);
 	i = 0;
 	while (*str)
 		p[i++] = *str++;
