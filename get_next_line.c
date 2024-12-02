@@ -6,38 +6,33 @@
 /*   By: aouaalla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 14:04:39 by aouaalla          #+#    #+#             */
-/*   Updated: 2024/12/02 19:19:45 by aouaalla         ###   ########.fr       */
+/*   Updated: 2024/11/28 14:04:41 by aouaalla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
-#include <errno.h>
 
-static void	clear(char *p)
+static void	clear(char **p)
 {
-	free(p);
-	p = NULL;
+	free(*p);
+	*p = NULL;
 }
 
 static char	*init(int fd, char *s, char *buffer)
 {
 	char	*tmp;
-	size_t	i;
+	int		i;
 
 	i = 1;
 	while (i)
 	{
 		i = read(fd, buffer, BUFFER_SIZE);
 		if (i < 0)
-		{
-			clear(buffer);
-			return (buffer);
-		}
+			return (clear(&buffer), buffer);
 		buffer[i] = '\0';
 		tmp = s;
 		s = ft_strjoin(tmp, buffer);
-		clear(tmp);
+		clear(&tmp);
 		if (ft_strchr(buffer, '\n'))
 			break ;
 	}
@@ -81,15 +76,17 @@ char	*get_next_line(int fd)
 	char		*line;
 
 	p = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE > INT_MAX || read(fd, 0, 0))
-		return (clear(st), st);
+	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE > INT_MAX)
+		return (clear(&st), NULL);
 	p = (char *)malloc(((size_t)(BUFFER_SIZE + 1)) * sizeof(char));
 	if (!p)
 		return (p);
 	container = init(fd, st, p);
+	if (!container)
+		return (clear(&st), st);
 	st = after_nline(container);
 	line = before_nline(container);
-	clear(p);
-	clear(container);
+	clear(&p);
+	clear(&container);
 	return (line);
 }
