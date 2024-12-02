@@ -6,7 +6,7 @@
 /*   By: aouaalla <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 14:04:39 by aouaalla          #+#    #+#             */
-/*   Updated: 2024/12/02 15:08:02 by aouaalla         ###   ########.fr       */
+/*   Updated: 2024/12/02 19:19:45 by aouaalla         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char	*get_next_line(int fd)
 	char		*line;
 
 	p = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE > INT_MAX)
+	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE > INT_MAX || read(fd, 0, 0))
 		return (clear(st), st);
 	p = (char *)malloc(((size_t)(BUFFER_SIZE + 1)) * sizeof(char));
 	if (!p)
@@ -93,4 +93,3 @@ char	*get_next_line(int fd)
 	clear(container);
 	return (line);
 }
-
