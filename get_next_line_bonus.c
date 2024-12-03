@@ -70,13 +70,13 @@ static char	*after_nline(char *str)
 
 char	*get_next_line(int fd)
 {
-	static char	*st[MAX];
+	static char	*st[O_MAX];
 	char		*p;
 	char		*container;
 	char		*line;
 
 	p = NULL;
-	if (fd < 0 || BUFFER_SIZE <= 0 || BUFFER_SIZE > INT_MAX)
+	if (fd < 0)
 	{
 		if (fd > 2)
 			clear(&st[fd]);

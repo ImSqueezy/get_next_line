@@ -14,10 +14,9 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 5
+#  define BUFFER_SIZE 37
 # endif
 # include <unistd.h>
-# include <fcntl.h>
 # include <stdlib.h>
 # include <limits.h>
 
