@@ -84,7 +84,7 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 	char	*p;
 	size_t	i;
 
-	if (!s)
+	if (!len)
 		return (NULL);
 	if (start > ft_strlen(s))
 		return (ft_strdup(""));

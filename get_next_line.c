@@ -39,19 +39,15 @@ static char	*init(int fd, char *s, char *buffer)
 	return (s);
 }
 
-static char	*before_nline(char *str)
+static char	*untill_nline(char *str)
 {
 	size_t	len;
 
 	len = 0;
-	if (*str == 10)
-		return (ft_substr(str, 0, 1));
-	while (str[len] && str[len] != 10)
+	while (str[len] && str[len] != '\n')
 		len++;
-	if (str[len] == 10)
+	if (str[len] == '\n')
 		len++;
-	if (len == 0)
-		return (0);
 	return (ft_substr(str, 0, len));
 }
 
@@ -63,8 +59,6 @@ static char	*after_nline(char *str)
 	if (!tmp)
 		return (tmp);
 	tmp++;
-	if (*tmp == '\0')
-		return (ft_strdup(tmp));
 	return (ft_strdup(tmp));
 }
 
@@ -76,16 +70,16 @@ char	*get_next_line(int fd)
 	char		*line;
 
 	p = NULL;
-	if (fd < 0)
-		return (clear(&st), NULL);
-	p = (char *)malloc(((size_t)(BUFFER_SIZE + 1)) * sizeof(char));
+	if (fd < 0 || BUFFER_SIZE >= INT_MAX || BUFFER_SIZE <= 0)
+		return (NULL);
+	p = (char *)malloc(((BUFFER_SIZE + 1)) * sizeof(char));
 	if (!p)
 		return (p);
 	container = init(fd, st, p);
 	if (!container)
 		return (clear(&st), st);
 	st = after_nline(container);
-	line = before_nline(container);
+	line = untill_nline(container);
 	clear(&p);
 	clear(&container);
 	return (line);
